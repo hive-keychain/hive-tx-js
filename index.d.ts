@@ -11,7 +11,7 @@ export class Signature extends Sig {}
 export class Transaction {
   constructor(trx?: object)
 
-  broadcast(): Promise<{
+  broadcast(overrideRpc?: string): Promise<{
     id: number
     jsonrpc: string
     result: { tx_id: string; status: string }
