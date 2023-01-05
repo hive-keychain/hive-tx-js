@@ -1,4 +1,3 @@
-const axios = require('axios')
 const config = require('../config')
 
 /**
@@ -7,25 +6,27 @@ const config = require('../config')
  * @param {Array}params - an array
  * @param {Number}timeout - optional - default 10 seconds
  */
-const call = async (method, params = [], timeout = 10) => {
-  let resolved = 0
+const call = async (method, params = [], timeout = 10, override = undefined) => {
+    let resolved = false
+
   return new Promise((resolve, reject) => {
-    axios
-      .post(
-        config.node,
-        JSON.stringify({
-          jsonrpc: '2.0',
-          method,
-          params,
-          id: 1
-        })
-      )
-      .then(res => {
-        if (res && res.status === 200) {
-          resolved = 1
-          resolve(res.data)
-        }
-      })
+    fetch(config.node, {
+      method: 'POST',
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method,
+        params,
+        id: 1
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => {
+      if (res && res.status === 200) {
+        resolved = true
+        resolve(res.json())
+      }
+    })
+
     setTimeout(() => {
       if (!resolved) {
         reject(new Error('Network timeout.'))
