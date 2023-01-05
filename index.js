@@ -59,14 +59,14 @@ class Transaction {
   }
 
   /** Broadcast the signed transaction. */
-  async broadcast () {
+  async broadcast (overrideRpc = null) {
     if (!this.created) {
       throw new Error('First create a transaction by .create(operations)')
     }
     if (!this.signedTransaction) {
       throw new Error('First sign the transaction by .sign(keys)')
     }
-    const result = await broadcastTransaction(this.signedTransaction)
+    const result = await broadcastTransaction(this.signedTransaction, overrideRpc)
     if (result.error) {
       return result
     }
