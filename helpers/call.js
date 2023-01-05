@@ -5,12 +5,13 @@ const config = require('../config')
  * @param {string}method - e.g. condenser_api.get_dynamic_global_properties
  * @param {Array}params - an array
  * @param {Number}timeout - optional - default 10 seconds
+ * @param {string}overrideRpc - optional - override RPC from config
  */
-const call = async (method, params = [], timeout = 10, override = undefined) => {
+const call = async (method, params = [], timeout = 10, overrideRpc = undefined) => {
     let resolved = false
 
   return new Promise((resolve, reject) => {
-    fetch(config.node, {
+    fetch(overrideRpc ? overrideRpc : config.node, {
       method: 'POST',
       body: JSON.stringify({
         jsonrpc: '2.0',
