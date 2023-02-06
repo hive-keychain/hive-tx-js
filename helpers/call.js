@@ -27,7 +27,10 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
           resolved = true
           resolve(res.json())
         }
-      })
+      }).catch(err => {
+        resolved = true;
+        reject(err);}
+      )
 
       setTimeout(() => {
         if (!resolved) {
