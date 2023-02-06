@@ -12,6 +12,10 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
 
   return new Promise((resolve, reject) => {
     try {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+
       fetch(overrideRpc ? overrideRpc : config.node, {
         method: 'POST',
         body: JSON.stringify({
@@ -20,7 +24,8 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
           params,
           id: 1
         }),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        signal: signal
       })
       .then(res => {
         if (res && res.status === 200) {
@@ -28,16 +33,20 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
           resolve(res.json())
         }
       }).catch(err => {
-        resolved = true;
-        reject(err);}
+          console.log('in .catch')
+          resolved = true;
+          reject(err);
+        }
       )
 
       setTimeout(() => {
         if (!resolved) {
           reject(new Error('Network timeout.'))
+          controller.abort()
         }
       }, timeout * 1000)
     } catch(err){
+      console.log('in normal catch')
       resolved = true;
       reject(err);
     }
