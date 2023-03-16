@@ -76,7 +76,7 @@ class Transaction {
     return {
       id: 1,
       jsonrpc: '2.0',
-      result: { tx_id: this.txId, status: 'unkown' }
+      result: { tx_id: this.txId, block_num: result.result.block_num, status: 'broadcasted' }
     }
   }
 
