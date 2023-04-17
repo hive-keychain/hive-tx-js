@@ -41,7 +41,7 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
 
       setTimeout(() => {
         if (!resolved) {
-          reject(new Error('Network timeout.'))
+          reject(new Error('hive_tx_network_error'))
           controller.abort()
         }
       }, timeout * 1000)
