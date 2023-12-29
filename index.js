@@ -121,6 +121,10 @@ class Transaction {
       throw new Error('Signature must be 130 characters long')
     }
 
+    if(!this.signedTransaction){
+      this.signedTransaction = { ...this.transaction };
+    }
+
     if(!this.signedTransaction.signatures){
       this.signedTransaction.signatures = [];
     }
