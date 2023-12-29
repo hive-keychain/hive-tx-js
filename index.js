@@ -120,12 +120,18 @@ class Transaction {
     if (signature.length !== 130) {
       throw new Error('Signature must be 130 characters long')
     }
-    if (this.signedTransaction && this.signedTransaction.signature && typeof this.signedTransaction.signature.length > 0) {
-      this.signedTransaction.signatures.push(signature)
-    } else {
-      this.signedTransaction = { ...this.transaction }
-      this.signedTransaction.signatures = [signature]
+
+    if(!this.signedTransaction.signatures){
+      this.signedTransaction.signatures = [];
     }
+    this.signedTransaction.signatures.push(signature);
+
+    // if (this.signedTransaction && this.signedTransaction.signatures) {
+    //   this.signedTransaction.signatures.push(signature)
+    // } else {
+    //   this.signedTransaction = { ...this.transaction }
+    //   this.signedTransaction.signatures = [signature]
+    // }
     return this.signedTransaction
   }
 }
