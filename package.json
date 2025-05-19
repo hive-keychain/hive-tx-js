@@ -1,11 +1,11 @@
 {
   "name": "hive-tx",
-  "version": "4.2.2",
+  "version": "4.3.0",
   "description": "Create, sign, and broadcast transactions on Hive blockchain",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-browser": "browserify index.js -p tinyify --standalone hiveTx > dist/hive-tx.min.js"
+    "build:browser": "webpack --config webpack.config.cjs --mode=production"
   },
   "keywords": [
     "hive",
@@ -19,10 +19,9 @@
   "author": "Mahdi Yari",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.27.2",
     "bs58": "^5.0.0",
     "bytebuffer": "^5.0.1",
-    "crypto-js": "^3.1.9-1",
+    "crypto-js": "^4.2.0",
     "secp256k1": "^3.8.0"
   },
   "homepage": "https://github.com/mahdiyari/hive-tx-js",
@@ -31,7 +30,11 @@
     "url": "https://github.com/mahdiyari/hive-tx-js.git"
   },
   "devDependencies": {
-    "browserify": "^16.5.0",
-    "tinyify": "^4.0.0"
+    "buffer": "^6.0.3",
+    "process": "^0.11.10",
+    "standard": "^17.1.2",
+    "stream-browserify": "^3.0.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   }
 }
