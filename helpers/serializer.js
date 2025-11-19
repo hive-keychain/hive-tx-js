@@ -575,8 +575,16 @@ OperationSerializers.recurrent_transfer = OperationDataSerializer(49, [
   ['memo', StringSerializer],
   ['recurrence', UInt16Serializer],
   ['executions', UInt16Serializer],
-  ['extensions', ArraySerializer(VoidSerializer)]
-])
+  [
+    'extensions',
+    ArraySerializer(
+      StaticVariantSerializer([
+        ObjectSerializer([
+          ['beneficiaries', ArraySerializer(UInt16Serializer)]
+        ])
+      ])
+    )
+  ]])
 
 const OperationSerializer = (buffer, operation) => {
   const serializer = OperationSerializers[operation[0]]
