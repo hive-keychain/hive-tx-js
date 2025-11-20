@@ -578,11 +578,7 @@ OperationSerializers.recurrent_transfer = OperationDataSerializer(49, [
   [
     'extensions',
     ArraySerializer(
-      ObjectSerializer(['recurrent_transfer_pair_id', 
-        ObjectSerializer([
-          ['pair_id', UInt16Serializer]
-        ])
-      ])
+      ObjectSerializer([['type', UInt8Serializer],['value', ObjectSerializer([['pair_id', UInt8Serializer]])]])
     )
   ]])
 
