@@ -15,7 +15,6 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
       const controller = new AbortController();
       const signal = controller.signal;
 
-
       fetch(overrideRpc ? overrideRpc : config.node, {
         method: 'POST',
         body: JSON.stringify({
@@ -28,12 +27,14 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
         signal: signal
       })
       .then(res => {
-        if (res && res.status === 200) {
+        if (res && res.ok) {
           resolved = true
           resolve(res.json())
         }
+        else if(res){
+          throw new Error(res.statusText)
+        }
       }).catch(err => {
-          console.log('in .catch')
           resolved = true;
           reject(err);
         }
@@ -46,7 +47,6 @@ const call = async (method, params = [], timeout = 10, overrideRpc = undefined) 
         }
       }, timeout * 1000)
     } catch(err){
-      console.log('in normal catch')
       resolved = true;
       reject(err);
     }
